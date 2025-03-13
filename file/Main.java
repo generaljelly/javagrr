@@ -1,3 +1,4 @@
+package file;
 // student, course classes. name + id. student has more then course.
 // write all students and courses into files
 // display all courses for one student
@@ -44,24 +45,27 @@ public class Main {
         m.writeCourses(c);
 
         // display courses for specific student
-        Scanner input = new Scanner(System.in);
+        Scanner input = new Scanner(System.in);        
         System.out.println("Enter full name: ");
         String namein = input.nextLine();
         System.out.println("Enter ID");
-        int idin = 0;
-        idin = input.nextInt();
-
+        int idin = input.nextInt();
+ 
         for (Student student: all) {
             if (namein.equals(student.getName()) && idin == student.getID()) {
                 m.displayCourses(student);
+                input.close();
+                return;
             }
         }
-    
+        System.out.println("Incorrect name or id");
+        input.close();
+        return;
     }
 
     public void writeStudents(Student[] students) {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter("students.txt"));
+            BufferedWriter bw = new BufferedWriter(new FileWriter("file/students.txt"));
             bw.write(String.format("%-20s %s\n", "Student Name", "ID"));
             
             for (Student student : students) {
@@ -78,7 +82,7 @@ public class Main {
 
     public void writeCourses(Course[] courses) {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter("courses.txt"));
+            BufferedWriter bw = new BufferedWriter(new FileWriter("file/courses.txt"));
             bw.write(String.format("%-20s %s\n", "Course Name", "ID"));
             
             for (Course course : courses) {
@@ -94,15 +98,16 @@ public class Main {
 
     public void displayCourses(Student student) {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter("StudentCourses.txt"));
+            BufferedWriter bw = new BufferedWriter(new FileWriter("file/StudentCourses.txt"));
             bw.write(String.format("%-20s %s\n", "Course Name", "ID")); 
             Course[] stcourses = student.getCourse();
             for (Course course: stcourses) {
                 bw.write(String.format("%-20s %s\n", course.getName(), course.getID()));
             }
 
-            /*
-            BufferedReader br = new BufferedReader(new FileReader("StudentCourses.txt"));
+            bw.close();
+            
+            BufferedReader br = new BufferedReader(new FileReader("file/StudentCourses.txt"));
             String s;
             System.out.print("Courses for ");
             System.out.println(student.getName());
@@ -110,8 +115,6 @@ public class Main {
                 System.out.println(s);
             }
             br.close();
-            */
-            bw.close();
         } catch (Exception E) {
 
         }

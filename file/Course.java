@@ -1,3 +1,4 @@
+package file;
 public class Course {
     private String name;
     private int id;
